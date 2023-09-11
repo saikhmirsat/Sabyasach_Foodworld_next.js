@@ -4,6 +4,7 @@ import style from "@/styles/navbar.module.css";
 import Image from "next/image"; // Import next/image
 import logo from "../Assets/logo.jpg"; // Make sure this path is correct
 
+
 export default function Navbar() {
   return (
     <div className={style.Navbar}>

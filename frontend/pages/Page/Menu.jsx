@@ -23,115 +23,115 @@ export default function Menu() {
         </div>
       </div>
       <div className={style.second_container}>
-        <div class={style.menu_card_div}>
-          <div class={style.image_container}>
+        <div className={style.menu_card_div}>
+          <div className={style.image_container}>
             <Image src={HandiBiryani} alt="Biryani" />
           </div>
-          <div class={style.content_container}>
+          <div className={style.content_container}>
             <h2>Chicken Biryani</h2>
-            <div class={style.additional_content}>
+            <div className={style.additional_content}>
               <p>Price: $10</p>
               <p>Veg/Non-veg: Non-veg</p>
-              <div class={style.quantity}>
+              <div className={style.quantity}>
                 <button>-</button>
                 <span>1</span>
                 <button>+</button>
               </div>
-              <button class={style.read_more}>Read More</button>
+              <button className={style.read_more}>Read More</button>
             </div>
           </div>
         </div>
 
-        <div class={style.menu_card_div}>
-          <div class={style.image_container}>
+        <div className={style.menu_card_div}>
+          <div className={style.image_container}>
             <Image src={roll} alt="roll" />
           </div>
-          <div class={style.content_container}>
+          <div className={style.content_container}>
             <h2>Chicken Roll</h2>
-            <div class={style.additional_content}>
+            <div className={style.additional_content}>
               <p>Price: $10</p>
               <p>Veg/Non-veg: Non-veg</p>
-              <div class={style.quantity}>
+              <div className={style.quantity}>
                 <button>-</button>
                 <span>1</span>
                 <button>+</button>
               </div>
-              <button class={style.read_more}>Read More</button>
+              <button className={style.read_more}>Read More</button>
             </div>
           </div>
         </div>
-        <div class={style.menu_card_div}>
-          <div class={style.image_container}>
+        <div className={style.menu_card_div}>
+          <div className={style.image_container}>
             <Image src={lachhaParatha} alt="paratha" />
           </div>
-          <div class={style.content_container}>
+          <div className={style.content_container}>
             <h2>Lachha Paratha</h2>
-            <div class={style.additional_content}>
+            <div className={style.additional_content}>
               <p>Price: $10</p>
               <p>Veg/Non-veg: Non-veg</p>
-              <div class={style.quantity}>
+              <div className={style.quantity}>
                 <button>-</button>
                 <span>1</span>
                 <button>+</button>
               </div>
-              <button class={style.read_more}>Read More</button>
+              <button className={style.read_more}>Read More</button>
             </div>
           </div>
         </div>
-        <div class={style.menu_card_div}>
-          <div class={style.image_container}>
+        <div className={style.menu_card_div}>
+          <div className={style.image_container}>
             <Image src={chicken_lollypop} alt="lollypop" />
           </div>
-          <div class={style.content_container}>
+          <div className={style.content_container}>
             <h2>Chicken Lollypop</h2>
-            <div class={style.additional_content}>
+            <div className={style.additional_content}>
               <p>Price: $10</p>
               <p>Veg/Non-veg: Non-veg</p>
-              <div class={style.quantity}>
+              <div className={style.quantity}>
                 <button>-</button>
                 <span>1</span>
                 <button>+</button>
               </div>
-              <button class={style.read_more}>Read More</button>
+              <button className={style.read_more}>Read More</button>
             </div>
           </div>
         </div>
-        <div class={style.menu_card_div}>
-          <div class={style.image_container}>
+        <div className={style.menu_card_div}>
+          <div className={style.image_container}>
             <Image src={noodles2} alt="Noodles" />
           </div>
-          <div class={style.content_container}>
+          <div className={style.content_container}>
             <h2>Noodles</h2>
-            <div class={style.additional_content}>
+            <div className={style.additional_content}>
               <p>Price: $10</p>
               <p>Veg/Non-veg: Non-veg</p>
-              <div class={style.quantity}>
+              <div className={style.quantity}>
                 <button>-</button>
                 <span>1</span>
                 <button>+</button>
               </div>
-              <button class={style.read_more}>Read More</button>
+              <button className={style.read_more}>Read More</button>
             </div>
           </div>
         </div>
-        <div class={style.menu_card_div}>
-          <div class={style.image_container}>
+        <div className={style.menu_card_div}>
+          <div className={style.image_container}>
             <img
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTM9IBVThF1JWRDjOw1DeMIJp80rQxG3sGElA&usqp=CAU"
               alt="biryani"
             />
           </div>
-          <div class={style.content_container}>
+          <div className={style.content_container}>
             <h2>Chicken Biryani</h2>
-            <div class={style.additional_content}>
+            <div className={style.additional_content}>
               <p>Price: $10</p>
               <p>Veg/Non-veg: Non-veg</p>
-              <div class={style.quantity}>
+              <div className={style.quantity}>
                 <button>-</button>
                 <span>1</span>
                 <button>+</button>
               </div>
-              <button class={style.read_more}>Read More</button>
+              <button className={style.read_more}>Read More</button>
             </div>
           </div>
         </div>

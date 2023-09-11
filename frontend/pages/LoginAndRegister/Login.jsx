@@ -4,6 +4,7 @@ import noodles from "../Assets/noodles.jpg";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
 export default function Login() {
   const [password, setPassword] = useState("");
@@ -35,6 +36,7 @@ export default function Login() {
           console.log(res);
           if (res.status == true) {
             alert(res.message);
+            Cookies.set("userData", JSON.stringify(res.user));
             router.push("/");
           } else {
             alert(res.message);
