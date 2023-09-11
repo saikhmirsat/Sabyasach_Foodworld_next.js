@@ -3,6 +3,7 @@ import style from "./Register.module.css";
 import noodles from "../Assets/noodles.jpg";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function Register() {
   const [firstName, setFirstName] = useState("");
@@ -12,7 +13,12 @@ export default function Register() {
   const [gender, setGender] = useState("");
   const [password, setPassword] = useState("");
 
+  const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
+
   const handleSubmit = (e) => {
+    setLoading(true);
     e.preventDefault();
 
     let obj = {
@@ -23,7 +29,38 @@ export default function Register() {
       gender,
       password,
     };
-    console.log("Form Data:", obj);
+
+    try {
+      fetch(`http://localhost:8080/users/register/`, {
+        method: "POST",
+        body: JSON.stringify(obj),
+        headers: {
+          "Content-type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          setLoading(false);
+
+          console.log(res);
+
+          if (res.status == true) {
+            alert(res.message);
+            router.push("/LoginAndRegister/Login");
+            setEmail("");
+            setFirstName("");
+            setLastName("");
+            setGender("");
+            setMobile("");
+            setPassword("");
+          } else {
+            alert(res.message);
+          }
+        });
+    } catch (err) {
+      setLoading(false);
+      console.log(err);
+    }
   };
 
   return (
@@ -108,7 +145,17 @@ export default function Register() {
                 <option value="other">Other</option>
               </select>
             </div>
-            <button type="submit">Register</button>
+            <button type="submit">
+              {loading ? (
+                <img
+                  style={{ width: "20px", height: "100%" }}
+                  src="https://i.gifer.com/ZKZg.gif"
+                  alt="loading.gif"
+                />
+              ) : (
+                "Register"
+              )}
+            </button>
             <p>
               If you have already register{" "}
               <Link href={"/LoginAndRegister/Login"}>Click</Link>

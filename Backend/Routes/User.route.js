@@ -73,32 +73,35 @@ UserRoute.post('/login', async (req, res) => {
     try {
 
         const finduser = await UserModel.find({ email })
+        console.log(finduser.length)
 
 
-        if (finduser < 1) {
+        if (finduser.length < 1) {
             return res.status(404).json({ message: "Please Register first", status: false })
+        } else {
+            bcrypt.compare(password, finduser[0].password, async (err, result) => {
+                if (result) {
+                    const token = jwt.sign({ UserID: finduser[0]._id }, "saikhmirsat", {
+                        expiresIn: "1d",
+                    });
+
+                    await UserModel.updateMany(
+                        { _id: finduser[0]._id },
+                        [{ $set: { loginToken: token } }, { $set: { isAuthUser: true } }]
+                    );
+
+                    const user = await UserModel.find({ email });
+
+
+
+                    return res.status(200).json({ status: true, message: "User Login Successfully", user: user[0] });
+                } else {
+                    return res.send({ status: false, message: "Wrong creadencial" });
+                }
+            })
         }
 
-        bcrypt.compare(password, finduser[0].password, async (err, result) => {
-            if (result) {
-                const token = jwt.sign({ UserID: finduser[0]._id }, "saikhmirsat", {
-                    expiresIn: "1d",
-                });
 
-                await UserModel.updateMany(
-                    { _id: finduser[0]._id },
-                    [{ $set: { loginToken: token } }, { $set: { isAuthUser: true } }]
-                );
-
-                const user = await UserModel.find({ email });
-
-
-
-                return res.status(200).json({ status: true, message: "User Login Successfully", user: user[0] });
-            } else {
-                return res.send({ status: false, message: "Wrong creadencial" });
-            }
-        })
 
 
     } catch {

@@ -3,10 +3,14 @@ import style from "./Login.module.css";
 import noodles from "../Assets/noodles.jpg";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function Login() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,7 +19,31 @@ export default function Login() {
       email,
       password,
     };
-    console.log("Form Data:", obj);
+
+    try {
+      fetch(`http://localhost:8080/users/login`, {
+        method: "POST",
+        body: JSON.stringify(obj),
+        headers: {
+          "Content-type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          setLoading(false);
+
+          console.log(res);
+          if (res.status == true) {
+            alert(res.message);
+            router.push("/");
+          } else {
+            alert(res.message);
+          }
+        });
+    } catch (err) {
+      setLoading(false);
+      console.log(err);
+    }
   };
 
   return (
@@ -57,7 +85,17 @@ export default function Login() {
                 required
               />
             </div>
-            <button type="submit">Login</button>
+            <button type="submit">
+              {loading ? (
+                <img
+                  style={{ width: "20px", height: "100%" }}
+                  src="https://i.gifer.com/ZKZg.gif"
+                  alt="loading.gif"
+                />
+              ) : (
+                "Login"
+              )}
+            </button>
             <br />
             <Link
               href="/LoginAndRegister/Forgetpassword"
