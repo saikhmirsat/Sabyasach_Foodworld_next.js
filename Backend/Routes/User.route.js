@@ -110,23 +110,49 @@ UserRoute.post('/login', async (req, res) => {
     }
 })
 
-UserRoute.post('/forgetpassword', async (req, res) => {
-    const { email } = req.body
-    try {
+UserRoute.post("/logout/:_id", async (req, res) => {
+    const id = req.params._id;
 
-        const finduser = await UserModel.find({ email })
-        console.log(finduser)
+    try {
+        const user = await UserModel.find({ _id: id });
+
+        if (user.length > 0) {
+            await UserModel.updateMany({ _id: user[0]._id }, [
+                { $set: { loginToken: "" } },
+                { $set: { isAuthUser: false } },
+            ]);
+
+            const updated = await UserModel.find({ _id: id })
+            console.log(updated)
+
+            return res
+                .status(201)
+                .json({ status: true, message: "Logout successful" });
+        } else {
+            return res
+                .status(500)
+                .json({ status: false, message: "something wrong" });
+        }
+    } catch (err) {
+        return res.status(500).json({ status: false, error: err });
+    }
+});
+
+UserRoute.post('/forgetpassword', async (req, res) => {
+    const { email } = req.body;
+    try {
+        const finduser = await UserModel.find({ email });
+        console.log(finduser);
 
         if (finduser.length > 0) {
             const token = jwt.sign(
                 { UserID: finduser[0]._id },
                 "saikhmirsat",
-                { expiresIn: "1day" } // Set the expiration time to 2 minutes
+                { expiresIn: "1day" }
             );
 
             await UserModel.updateMany({ _id: finduser[0]._id }, [
-                { $set: { loginToken: token } },
-                { $set: { date_of_update_password: new Date() } },
+                { $set: { loginToken: token } }
             ]);
 
             const transporter = nodemailer.createTransport({
@@ -137,7 +163,6 @@ UserRoute.post('/forgetpassword', async (req, res) => {
                 },
             });
 
-            // Compose the email
             const mailOptions = {
                 from: "saikh.mirsat55@gmail.com",
                 to: finduser[0].email,
@@ -145,27 +170,26 @@ UserRoute.post('/forgetpassword', async (req, res) => {
                 text: `Here is your password reset link: http://localhost:3000/LoginAndRegister/Setpassword/${finduser[0]._id}/${token}`,
             };
 
-            // Send the email
             transporter.sendMail(mailOptions, (error, info) => {
                 if (error) {
                     console.error("Error sending email:", error);
-                    res.send({ status: false, message: "Error sending email" });
+                    res.status(500).json({ status: false, message: "Error sending email" });
                 } else {
                     console.log("Email sent:", info.response);
-                    res.send({ status: true, message: "Email sent successfully" });
+                    res.status(200).json({ status: true, message: "Email sent successfully" });
                 }
             });
 
         } else {
-            res.send({ status: false, message: "Email not found. Please check your email!" });
+            res.status(404).json({ status: false, message: "Email not found. Please check your email!" });
         }
 
-
     } catch (err) {
-        console.error({ 'Error': err })
-        res.status(500).json({ message: 'Internal server error.', status: false })
+        console.error({ 'Error': err });
+        res.status(500).json({ status: false, message: 'Internal server error.' });
     }
-})
+});
+
 
 
 UserRoute.patch("/setpassword/:id/:token", async (req, res) => {

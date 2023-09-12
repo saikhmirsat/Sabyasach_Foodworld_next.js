@@ -36,7 +36,8 @@ export default function Login() {
           console.log(res);
           if (res.status == true) {
             alert(res.message);
-            Cookies.set("userData", JSON.stringify(res.user));
+            localStorage.setItem("userData", JSON.stringify(res.user));
+
             router.push("/");
           } else {
             alert(res.message);

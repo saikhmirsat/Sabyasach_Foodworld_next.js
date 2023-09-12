@@ -1,17 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
-export default function Forgetpassword() {
-  const [email, setEmail] = useState("");
+export default function UserProfile() {
   const [loading, setLoading] = useState(false);
+  const [id, setId] = useState("");
 
-  const ForgetFunc = async () => {
-    const obj = {
-      email,
-    };
+  useEffect(() => {
+    // Check if window object (client side) is defined
+    if (typeof window !== "undefined") {
+      const user = JSON.parse(localStorage.getItem("userData"));
+      setId(user._id);
+      // Use loginCheck here...
+    }
+  }, []);
+  const router = useRouter();
+
+  const LogoutFunc = () => {
     try {
-      await fetch(`http://localhost:8080/users/forgetpassword/`, {
+      fetch(`http://localhost:8080/users/logout/${id}`, {
         method: "POST",
-        body: JSON.stringify(obj),
         headers: {
           "Content-type": "application/json",
         },
@@ -21,9 +28,11 @@ export default function Forgetpassword() {
           setLoading(false);
 
           console.log(res);
-
           if (res.status == true) {
             alert(res.message);
+            localStorage.removeItem("userData");
+
+            router.push("/LoginAndRegister/Login");
           } else {
             alert(res.message);
           }
@@ -36,12 +45,8 @@ export default function Forgetpassword() {
 
   return (
     <div>
-      <input
-        type="email"
-        placeholder="Email"
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <button onClick={ForgetFunc}>
+      UserProfile
+      <button onClick={LogoutFunc}>
         {loading ? (
           <img
             style={{ width: "20px", height: "100%" }}
@@ -49,7 +54,7 @@ export default function Forgetpassword() {
             alt="loading.gif"
           />
         ) : (
-          "Forget"
+          "Logout"
         )}
       </button>
     </div>

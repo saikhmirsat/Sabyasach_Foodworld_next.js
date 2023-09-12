@@ -1,11 +1,22 @@
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import style from "@/styles/navbar.module.css";
 import Image from "next/image"; // Import next/image
 import logo from "../Assets/logo.jpg"; // Make sure this path is correct
 
-
 export default function Navbar() {
+  const [isAuthUser, setIsAuthUser] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const loginCheck = JSON.parse(localStorage.getItem("userData"));
+      if (loginCheck) {
+        setIsAuthUser(loginCheck.isAuthUser);
+        console.log({ isAuthUser: loginCheck.isAuthUser });
+      }
+    }
+  }, []);
+
   return (
     <div className={style.Navbar}>
       <div className={style.Nav_left_item}>
@@ -16,8 +27,14 @@ export default function Navbar() {
         <Link href="/Page/Menu"> Menu</Link>
         <Link href="/Page/About">About</Link>
         <Link href="/Page/Contact">Contact</Link>
-        <Link href="/LoginAndRegister/Login">Login</Link>
-        <Link href="/LoginAndRegister/Register">Register</Link>
+        {isAuthUser ? (
+          <Link href="/UserProfile/UserProfile">Profile</Link>
+        ) : (
+          <>
+            <Link href="/LoginAndRegister/Login">Login</Link>
+            <Link href="/LoginAndRegister/Register">Register</Link>
+          </>
+        )}
       </div>
     </div>
   );
